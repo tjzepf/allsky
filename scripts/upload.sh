@@ -146,11 +146,11 @@ if [[ ${PROTOCOL} == "s3" ]] ; then
 
 
 elif [[ ${PROTOCOL} == "oci" ]] ; then
-	DEST="${OCI_BUCKET}${DIRECTORY}/${DESTINATION_NAME}"
+	DEST=$( echo "${DIRECTORY}/${DESTINATION_NAME}" | sed 's/^\///' ) # no leading /
 	if [[ ${SILENT} == "false" && ${ALLSKY_DEBUG_LEVEL} -ge 3 ]]; then
-		echo "${ME}: Uploading ${FILE_TO_UPLOAD} to ${DEST}"
+		echo "${ME}: Uploading ${FILE_TO_UPLOAD} to ${OCI_BUCKET}/${DEST}"
 	fi
-	OUTPUT="$( "${OCI_CLI_DIR}/oci" os pub "${FILE_TO_UPLOAD}" "${DEST}"" 2>&1 )"
+	OUTPUT="$( "${OCI_CLI_DIR}/oci" os object put --force --bucket-name "${OCI_BUCKET}" --file "${FILE_TO_UPLOAD}" --name "${DEST}" 2>&1 )"
 	RET=$?
 
 
