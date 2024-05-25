@@ -68,6 +68,14 @@ S3_BUCKET="allskybucket"
 S3_ACL="private"
 
 
+############### OCI PROTOCOL only:
+	# OCI CLI directory where the OCI CLI tools are installed.
+OCI_CLI_DIR="/home/pi/oci-venv/bin/oci"
+
+	# Name of S3 Bucket where the files will be uploaded.
+OCI_BUCKET="Allsky"
+
+
 ############### GCS PROTOCOL only:
 	# Name of the GCS bucket where the files are uploaded.
 GCS_BUCKET="allskybucket"

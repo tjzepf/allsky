@@ -557,6 +557,15 @@ case "${PROTOCOL}" in
 		check_PROTOCOL "${PROTOCOL}" "S3_ACL"
 		;;
 
+	oci)
+		if check_PROTOCOL "${PROTOCOL}" "OCI_CLI_DIR" && [[ ! -e ${OCI_CLI_DIR} ]]; then
+			heading "Warnings"
+			echo "PROTOCOL (${PROTOCOL}) set but 'OCI_CLI_DIR' (${OCI_CLI_DIR}) does not exist."
+			echo "Uploads will not work."
+		fi
+		check_PROTOCOL "${PROTOCOL}" "OCI_BUCKET"
+		;;
+
 	gcs)
 		check_PROTOCOL "${PROTOCOL}" "GCS_BUCKET"
 		check_PROTOCOL "${PROTOCOL}" "GCS_ACL"
@@ -564,7 +573,7 @@ case "${PROTOCOL}" in
 
 	*)
 		heading "Warnings"
-		echo "PROTOCOL (${PROTOCOL}) not blank or one of: local, ftp, ftps, sftp, scp, s3, gcs."
+		echo "PROTOCOL (${PROTOCOL}) not blank or one of: local, ftp, ftps, sftp, scp, s3, oci, gcs."
 		echo "Uploads will not work until this is corrected."
 		;;
 esac

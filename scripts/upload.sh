@@ -145,6 +145,15 @@ if [[ ${PROTOCOL} == "s3" ]] ; then
 	RET=$?
 
 
+elif [[ ${PROTOCOL} == "oci" ]] ; then
+	DEST="${OCI_BUCKET}${DIRECTORY}/${DESTINATION_NAME}"
+	if [[ ${SILENT} == "false" && ${ALLSKY_DEBUG_LEVEL} -ge 3 ]]; then
+		echo "${ME}: Uploading ${FILE_TO_UPLOAD} to ${DEST}"
+	fi
+	OUTPUT="$( "${OCI_CLI_DIR}/oci" os pub "${FILE_TO_UPLOAD}" "${DEST}"" 2>&1 )"
+	RET=$?
+
+
 elif [[ ${PROTOCOL} == "local" ]] ; then
 	DEST="${DIRECTORY}/${DESTINATION_NAME}"
 	if [[ ${SILENT} == "false" && ${ALLSKY_DEBUG_LEVEL} -ge 3 ]]; then

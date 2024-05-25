@@ -269,17 +269,22 @@ function whatWebsites()
 					;;
 
 				ftp | ftps | sftp | scp)		# These require R
-					X="$(get_variable "REMOTE_HOST" "${ALLSKY_CONFIG}/ftp-settings.sh")" 
+					X="$(get_variable "REMOTE_HOST" "${ALLSKY_CONFIG}/ftp-settings.sh")"
 					[[ -n ${X} ]] && HAS_REMOTE="true"
 					;;
 
 				s3)
-					X="$(get_variable "AWS_CLI_DIR" "${ALLSKY_CONFIG}/ftp-settings.sh")" 
+					X="$(get_variable "AWS_CLI_DIR" "${ALLSKY_CONFIG}/ftp-settings.sh")"
+					[[ -n ${X} ]] && HAS_REMOTE="true"
+					;;
+
+				oci)
+					X="$(get_variable "OCI_CLI_DIR" "${ALLSKY_CONFIG}/ftp-settings.sh")"
 					[[ -n ${X} ]] && HAS_REMOTE="true"
 					;;
 
 				gcs)
-					X="$(get_variable "GCS_BUCKET" "${ALLSKY_CONFIG}/ftp-settings.sh")" 
+					X="$(get_variable "GCS_BUCKET" "${ALLSKY_CONFIG}/ftp-settings.sh")"
 					[[ -n ${X} ]] && HAS_REMOTE="true"
 					;;
 
@@ -461,7 +466,7 @@ function settings()
 	fi
 
 	echo "${M}: Unable to get json value for '${FIELD}' in '${FILE}." >&2
-	
+
 	return 2
 }
 
@@ -495,7 +500,7 @@ function get_links()
 		else
 			x=""
 		fi
-		find "${DIRNAME}" -inum "${INODE}" "!" -path "${x}${FILE}" | 
+		find "${DIRNAME}" -inum "${INODE}" "!" -path "${x}${FILE}" |
 			if [[ -n ${x} ]]; then
 				sed -e "s;^${x};;"
 			else
