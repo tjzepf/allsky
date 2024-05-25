@@ -13,6 +13,7 @@ gmon.out
 # generated binaries
 capture_ZWO
 capture_RPiHQ
+capture_RPi
 keogram
 startrails
 sunwait
